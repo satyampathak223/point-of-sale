@@ -13,16 +13,12 @@ public abstract class AbstractDao<T> {
 
     Class<T> className;
 
-    private final String select_all;
-    private final String select_by_id;
-
     @PersistenceContext
     private EntityManager entityManager;
 
     public AbstractDao() {
         this.className = (Class) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-        select_all = "select p from " + className.getSimpleName() + " p";
-        select_by_id = "select p from " + className.getSimpleName() + " p where id=:id";
+
     }
 
     protected <T> T getSingle(TypedQuery<T> query) {
@@ -42,12 +38,14 @@ public abstract class AbstractDao<T> {
     }
 
     public T select(Integer id) {
+        final String select_by_id="select p from " + className.getSimpleName() + " p where id=:id";
         TypedQuery<T> query = getQuery(select_by_id, className);
         query.setParameter("id", id);
         return getSingle(query);
     }
 
     public List<T> selectAll() {
+        final String select_all = "select p from " + className.getSimpleName() + " p";
         TypedQuery<T> query = getQuery(select_all, className);
         return query.getResultList();
     }

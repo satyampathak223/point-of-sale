@@ -34,13 +34,13 @@ public class BrandServiceApi extends AbstractApi {
         brandDao.insert(brandPojo);
     }
 
-    public void delete(Integer id) {
-        brandDao.delete(id);
-    }
-
     public BrandPojo get(Integer id) throws ApiException {
         return getCheck(id);
     }
+
+	public BrandPojo getByBrandAndCategory(String brand,String category){
+		return brandDao.selectUsingBrandAndCategory(brand,category);
+	}
 
     public List<BrandPojo> getAll() {
         return brandDao.selectAll();

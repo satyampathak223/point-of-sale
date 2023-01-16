@@ -20,21 +20,8 @@ public class BrandDto {
         if (brandForm.getCategory() == null) {
             throw new ApiException("Brand category can not be null");
         }
-
-        return convert(brandForm);
+        return null;
     }
 
-//    TODO ask how to use this function
-//    public void checkNotNull(List<BrandForm> brandForms) throws ApiException{
-//        for(BrandForm brandForm:brandForms) {
-//            checkNotNull(brandForm);
-//        }
-//    }
 
-    private static BrandPojo convert(BrandForm brandForm) {
-        BrandPojo brandPojo = new BrandPojo();
-        brandPojo.setName(brandForm.getName());
-        brandPojo.setCategory(brandForm.getCategory());
-        return brandPojo;
-    }
 }
