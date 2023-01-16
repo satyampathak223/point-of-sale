@@ -1,6 +1,6 @@
 package com.increff.pos.model;
 
-public class BrandData extends BrandForm{
+public class BrandData extends BrandForm {
     private Integer id;
 
     public Integer getId() {

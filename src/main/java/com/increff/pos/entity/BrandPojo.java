@@ -1,6 +1,7 @@
 package com.increff.pos.entity;
 
 /* TODO is this allowed or only individual imports are allowed ? */
+
 import javax.persistence.*;
 
 @Entity
