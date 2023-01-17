@@ -20,8 +20,6 @@ public class BrandApiController {
     @Autowired
     private BrandServiceApi brandServiceApi;
 
-    private BrandDto brandDto;
-
     @ApiOperation(value = "Adds a brand")
     @RequestMapping(path = "/api/brands", method = RequestMethod.POST)
     public void add(@RequestBody BrandForm brandForm) throws ApiException {
@@ -36,7 +34,7 @@ public class BrandApiController {
         return convert(brandPojo);
     }
 
-	@ApiOperation(value = "Gets a brand by ID")
+	@ApiOperation(value = "Gets a brand by brand and category name")
     @RequestMapping(path = "/api/brands/{brand}/{category}", method = RequestMethod.GET)
     public BrandData getByBrandAndCategory(@PathVariable String brand, @PathVariable String category ) throws ApiException {
         BrandPojo brandPojo = brandServiceApi.getByBrandAndCategory(brand,category);

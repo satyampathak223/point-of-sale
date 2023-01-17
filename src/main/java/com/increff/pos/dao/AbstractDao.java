@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.lang.reflect.ParameterizedType;
+import java.util.Calendar;
 import java.util.List;
 
 @Repository
@@ -48,6 +49,13 @@ public abstract class AbstractDao<T> {
         final String select_all = "select p from " + className.getSimpleName() + " p";
         TypedQuery<T> query = getQuery(select_all, className);
         return query.getResultList();
+    }
+
+    public T select(String key,String value){
+        final String select_by_key="select p from "+ className.getSimpleName() + " p where "+ key + " = :"+value;
+        TypedQuery<T> query = getQuery(select_by_key, className);
+        query.setParameter(key,value);
+        return getSingle(query);
     }
 
 }
