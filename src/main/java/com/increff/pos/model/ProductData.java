@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ProductData extends ProductUpsertForm {
-    private Integer id;
+//    private Integer id;
 
 }

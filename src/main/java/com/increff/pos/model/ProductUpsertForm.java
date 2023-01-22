@@ -18,4 +18,7 @@ public class ProductUpsertForm {
     @NonNull
     Double mrp;
 
+    @NonNull
+    Integer id;
+
 }

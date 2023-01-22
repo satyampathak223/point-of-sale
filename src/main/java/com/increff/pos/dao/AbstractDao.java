@@ -38,16 +38,16 @@ public abstract class AbstractDao<T> {
     }
 
     public T select(Integer id) {
-        final String select_by_id = "select p from " + className.getSimpleName() + " p where id=:id";
-        TypedQuery<T> query = getQuery(select_by_id, className);
+        final String SELECT_BY_ID = "select p from " + className.getSimpleName() + " p where id=:id";
+        TypedQuery<T> query = getQuery(SELECT_BY_ID, className);
         query.setParameter("id", id);
         return getSingle(query);
     }
 
     public List<T> selectAll() {
-        final String select_all = "select p from " + className.getSimpleName() + " p";
+        final String SELECT_ALL = "select p from " + className.getSimpleName() + " p";
 //        System.out.println(select_all);
-        TypedQuery<T> query = getQuery(select_all, className);
+        TypedQuery<T> query = getQuery(SELECT_ALL, className);
         return query.getResultList();
     }
 

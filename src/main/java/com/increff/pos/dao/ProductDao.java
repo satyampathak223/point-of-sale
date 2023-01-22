@@ -8,13 +8,14 @@ import javax.persistence.TypedQuery;
 @Repository
 public class ProductDao extends AbstractDao<ProductPojo> {
 
-    final String select_by_barcode="select p from ProductPojo p where barCode=:barCode";
+    final String SELECT_BY_BARCODE = "select p from ProductPojo p where barCode=:barCode";
 
     public ProductPojo select(String barCode) {
-        TypedQuery<ProductPojo> query = getQuery(select_by_barcode, ProductPojo.class);
+        TypedQuery<ProductPojo> query = getQuery(SELECT_BY_BARCODE, ProductPojo.class);
         query.setParameter("barCode", barCode);
         return getSingle(query);
     }
+
     public void update(ProductPojo productPojo) {
 
     }

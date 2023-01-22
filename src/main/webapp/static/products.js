@@ -14,7 +14,8 @@ function addProduct(event){
 	var $form = $("#add-product-form");
 	var json = toJson($form);
 	var url = getProductUrl();
-
+    json=json+"]";
+    json="["+json;
 	$.ajax({
 	   url: url,
 	   type: 'POST',
