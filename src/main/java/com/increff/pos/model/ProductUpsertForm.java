@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ProductForm {
+public class ProductUpsertForm {
     @NonNull
     String barCode;
     @NonNull

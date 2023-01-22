@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BrandForm {
+public class BrandUpsertForm {
     @NonNull
     private String name;
     @NonNull

@@ -19,6 +19,14 @@ public class UiController {
         return mav("brands.html");
     }
 
+    @ApiOperation(value = "Serving a basic html page")
+    @RequestMapping(path = "/products")
+    public ModelAndView products() {
+        return mav("products.html");
+    }
+
+
+
 //    @ApiOperation(value = "Serving a basic html page")
 //    @RequestMapping(path = "/ui/home")
 //    public ModelAndView home() {

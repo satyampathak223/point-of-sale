@@ -60,9 +60,10 @@ public class ProductServiceApi {
 
     public void update(Integer id, ProductPojo productPojo) throws ApiException {
         normalize(productPojo);
-        if (productDao.select(productPojo.getBarcode()) != null) {
-            throw new ApiException("Product already exists");
-        }
+//        if (productDao.select(productPojo.getBarcode()) != null) {
+//            throw new ApiException("Product already exists");
+//        }
+
         ProductPojo previousProductPojo = getCheck(id);
         previousProductPojo.setBrandCategoryId(productPojo.getBrandCategoryId());
         previousProductPojo.setBarcode(productPojo.getBarcode());
@@ -76,6 +77,5 @@ public class ProductServiceApi {
         productPojo.setName(StringUtil.toLowerCase(productPojo.getName()).trim());
         productPojo.setBarcode(StringUtil.toLowerCase(productPojo.getBarcode()).trim());
     }
-
 
 }

@@ -1,76 +1,65 @@
 package com.increff.pos.controller;
 
 import com.increff.pos.api.ApiException;
-import com.increff.pos.api.BrandServiceApi;
 import com.increff.pos.dto.BrandDto;
-import com.increff.pos.entity.BrandPojo;
 import com.increff.pos.model.BrandData;
-import com.increff.pos.model.BrandForm;
+import com.increff.pos.model.BrandUpsertForm;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Api
 @RestController
+@RequestMapping("/api")
 public class BrandApiController {
     @Autowired
-    private BrandServiceApi brandServiceApi;
+    private BrandDto brandDto;
 
-    @ApiOperation(value = "Adds a brand")
-    @RequestMapping(path = "/api/brands", method = RequestMethod.POST)
-    public void add(@RequestBody BrandForm brandForm) throws ApiException {
-        BrandPojo brandPojo = convert(brandForm);
-        brandServiceApi.add(brandPojo);
+    @ApiOperation(value = "Add list of brand")
+    @RequestMapping(path = "/brands", method = RequestMethod.POST)
+    public void add(@RequestBody List<BrandUpsertForm> brandForms) throws ApiException {
+        brandDto.add(brandForms);
     }
 
-    @ApiOperation(value = "Gets a brand by ID")
-    @RequestMapping(path = "/api/brands/{id}", method = RequestMethod.GET)
+    @ApiOperation(value = "Get a brand by ID")
+    @RequestMapping(path = "/brands/{id}", method = RequestMethod.GET)
     public BrandData get(@PathVariable Integer id) throws ApiException {
-        BrandPojo brandPojo = brandServiceApi.get(id);
-        return convert(brandPojo);
+        return brandDto.get(id);
     }
 
-	@ApiOperation(value = "Gets a brand by brand and category name")
-    @RequestMapping(path = "/api/brands/{brand}/{category}", method = RequestMethod.GET)
-    public BrandData getByBrandAndCategory(@PathVariable String brand, @PathVariable String category ) throws ApiException {
-        BrandPojo brandPojo = brandServiceApi.getByBrandAndCategory(brand,category);
-        return convert(brandPojo);
+    //TODO try using post
+    @ApiOperation(value = "Get a brand by brand and category")
+    @RequestMapping(path = "/get-by-brand-and-category", method = RequestMethod.POST)
+    public BrandData getByBrandAndCategory(@RequestBody BrandUpsertForm brandForm) {
+        return brandDto.get(brandForm);
     }
 
-    @ApiOperation(value = "Gets list of all brands")
-    @RequestMapping(path = "/api/brands", method = RequestMethod.GET)
+    @ApiOperation(value = "Get list of all brands")
+    @RequestMapping(path = "/brands", method = RequestMethod.GET)
     public List<BrandData> getAll() {
-        List<BrandPojo> brandPojoList = brandServiceApi.getAll();
-        List<BrandData> brandDataList = new ArrayList<BrandData>();
-        for (BrandPojo p : brandPojoList) {
-            brandDataList.add(convert(p));
-        }
-        return brandDataList;
+        return brandDto.getAll();
+    }
+
+    @ApiOperation(value = "Get categories by brand")
+    @RequestMapping(path = "/categories-by-brand/{name}", method = RequestMethod.GET)
+    public List<String> getCategories(@PathVariable String name) {
+        return brandDto.get(name);
+    }
+
+    @ApiOperation(value = "Get distinct brand names")
+    @RequestMapping(path = "/distinct-brand", method = RequestMethod.GET)
+    public List<String> getDistinctBrands() {
+        return brandDto.getDistinctBrands();
     }
 
     @ApiOperation(value = "Updates a brand")
-    @RequestMapping(path = "/api/brands/{id}", method = RequestMethod.PUT)
-    public void update(@PathVariable Integer id, @RequestBody BrandForm brandForm) throws ApiException {
-        BrandPojo brandPojo = convert(brandForm);
-        brandServiceApi.update(id, brandPojo);
-    }
-
-    private static BrandData convert(BrandPojo brandPojo) {
-        BrandData brandData = new BrandData();
-        brandData.setName(brandPojo.getName());
-        brandData.setCategory(brandPojo.getCategory());
-        brandData.setId(brandPojo.getId());
-        return brandData;
-    }
-
-	private static BrandPojo convert(BrandForm brandForm) {
-        BrandPojo brandPojo = new BrandPojo();
-        brandPojo.setName(brandForm.getName());
-        brandPojo.setCategory(brandForm.getCategory());
-        return brandPojo;
+    @RequestMapping(path = "/brands/{id}", method = RequestMethod.PUT)
+    public void update(@PathVariable Integer id, @RequestBody BrandUpsertForm brandForm) throws ApiException {
+        brandDto.update(id, brandForm);
     }
 }
+//TODO pagination ( at last )
+// TODO limit no of rows to be uploaded at once to 5000 as given in pos

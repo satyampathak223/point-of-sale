@@ -1,13 +1,10 @@
 package com.increff.pos.model;
 
-public class BrandData extends BrandForm {
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class BrandData extends BrandUpsertForm {
     private Integer id;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }
