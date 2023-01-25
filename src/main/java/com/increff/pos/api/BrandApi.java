@@ -2,49 +2,39 @@ package com.increff.pos.api;
 
 import com.increff.pos.dao.BrandDao;
 import com.increff.pos.entity.BrandPojo;
-import com.increff.pos.util.StringUtil;
+import com.increff.pos.model.BrandUpsertForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Service
 @Transactional(rollbackOn = ApiException.class)
-public class BrandServiceApi {
-
+public class BrandApi {
+    //TODO always normalise on  api layer
     @Autowired
     private BrandDao brandDao;
 
-    public void add(BrandPojo brandPojo) throws ApiException {
-        if (Objects.nonNull(getByBrandAndCategory(brandPojo.getName(), brandPojo.getCategory()))) {
-            System.out.println("Duplicate brand category combination");
-            return;
+    public void add(List<BrandPojo> brandPojos) throws ApiException {
+        for (BrandPojo brandPojo : brandPojos) {
+            brandDao.insert(brandPojo);
         }
-        brandDao.insert(brandPojo);
     }
 
-    public void add(List<BrandPojo> brandPojos) throws ApiException {
-        String errorMessage = "";
-
-        for (Integer i = 0; i < brandPojos.size(); i++) {
-            BrandPojo brandPojo = brandPojos.get(i);
-
-            for (Integer j = i + 1; j < brandPojos.size(); j++) {
-                if (brandPojos.size() == 1) {
-//               Single element so no need to display row number
-                    errorMessage += String.format("%s:%s\n", brandPojo.getName(), brandPojo.getCategory());
-                } else {
-                    errorMessage += String.format("%s:%s in row %d\n", brandPojo.getName(), brandPojo.getCategory(), i + 1, j + 1);
-                }
+    public void checkIfAlreadyExists(List<BrandUpsertForm> brandForms) throws ApiException {
+        List<String> errorMessage = new ArrayList<>();
+        for (BrandUpsertForm brandForm : brandForms) {
+            if (Objects.nonNull(getByBrandAndCategory(brandForm.getName(), brandForm.getCategory()))) {
+                String erroneousMessage = brandForm.getName() + "_" + brandForm.getCategory();
+                errorMessage.add(erroneousMessage);
             }
         }
-        if (!StringUtil.isEmpty(errorMessage)) {
-            throw new ApiException("This brand:category combination already exists");
-        }
-        for (BrandPojo brandPojo : brandPojos) {
-            add(brandPojo);
+
+        if (!errorMessage.isEmpty()) {
+            throw new ApiException("Brand_category combination already exist. Erroneous combination\n" + errorMessage.toString());
         }
     }
 
@@ -70,13 +60,13 @@ public class BrandServiceApi {
 
     public BrandPojo getCheck(Integer id) throws ApiException {
         BrandPojo brandPojo = brandDao.select(id);
-        if (brandPojo == null) {
+        if (Objects.isNull(brandPojo)) {
             throw new ApiException("Brand with given ID does not exist, id: " + id);
         }
         return brandPojo;
     }
 
-    public void update(Integer id, BrandPojo brandPojo) throws ApiException {
+    public BrandPojo update(Integer id, BrandPojo brandPojo) throws ApiException {
 
         if (Objects.nonNull(brandDao.getByBrandAndCategory(brandPojo.getName(), brandPojo.getCategory()))) {
             throw new ApiException("Same combination of brand and category already exists");
@@ -85,6 +75,8 @@ public class BrandServiceApi {
         previousBrandPojo.setCategory(brandPojo.getCategory());
         previousBrandPojo.setName(brandPojo.getName());
         brandDao.update(previousBrandPojo);
+
+        return previousBrandPojo;
     }
 
 }

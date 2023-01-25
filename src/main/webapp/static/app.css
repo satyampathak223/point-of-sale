@@ -59,3 +59,7 @@ body {
   box-shadow: none;
   color: #2c5777;
 }
+
+.bg-solid-white {
+    background-color: red !important;
+}

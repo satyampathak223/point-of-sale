@@ -5,218 +5,222 @@
 <head th:replace="snippets.html :: name_head"></head>
 
 <body>
-
 <nav th:replace="snippets.html :: name_navbar"></nav>
+<div th:replace="snippets.html :: name_toast"></div>
+
 
 <div class="container">
 
 
- <!-- Top row with form-->
- <div class="row">
-	 <div class="col-12">
-			  <button type="button" class="btn btn-primary" id="add-product-dialog" style="margin-right:28px;">Add Product</button>
-			  <button type="button" class="btn btn-primary" id="upload-data" >Upload</button>
-	 </div>
-</div>
-
-
-<!-- Blank Row -->
-<div class="row">
-	&nbsp;
-</div>
-<div class="row">
-
- <!-- Table -->
- <div class="col-12">
-	<table class="table table-striped" id="product-table">
-	  <thead>
-	    <tr>
-			<th scope="col">Bar Code</th>
-			<th scope="col">Brand Name</th>
-			<th scope="col">Category</th>
-	      	<th scope="col">Product Name</th>
-	      	<th scope="col">MRP</th>
-	      	<th scope="col">Action</th>
-	    </tr>
-	  </thead>
-	  <tbody>
-	    <tr>
-	      <td>1</td>
-	      <td>Romil Jain</td>
-	      <td>30</td>
-	      <td>Edit | Delete</td>
-	    </tr>
-	    <tr>
-	      <td>2</td>
-	      <td>Rajul Jain</td>
-	      <td>31</td>
-	      <td>Edit | Delete</td>
-	    </tr>
-	    <tr>
-	      <td>3</td>
-	      <td>Anaisha Jain</td>
-	      <td>7</td>
-	      <td>Edit | Delete</td>
-	    </tr>
-	  </tbody>
-	</table>
-
-</div>
-</div>
-
-<!-- Product Add Modal -->
-<div class="modal" tabindex="-1" role="dialog" id="add-product-modal" data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Add Product Details</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-			<form class="form-inline" id="add-product-form">
-			  <div class="form-group">
-			    <label for="inputName" class="col-sm-2-random col-form-label-random">&nbsp;&nbsp;Barcode&nbsp;&nbsp;</label>
-			    <div class="col-sm-10">
-			      <input type="text" class="form-control" id="inputName" name="barCode" placeholder="Enter Barcode">
-			    </div>
-			  </div>
-
-			<div class="form-group">
-			    <label for="inputName" class="col-sm-2-random col-form-label-random">&nbsp;&nbsp;Brand Name&nbsp;&nbsp;</label>
-			    <div class="col-sm-10">
-			      <input type="text" class="form-control" name="brandName"  placeholder="Enter Brand Name">
-			    </div>
-			  </div>
-
-				<div class="form-group">
-			    <label for="inputName" class="col-sm-2-random col-form-label-random">&nbsp;&nbsp;Category&nbsp;&nbsp;</label>
-			    <div class="col-sm-10">
-			      <input type="text" class="form-control" name="category"  placeholder="Enter Category">
-			    </div>
-			  </div>
-
-				<div class="form-group">
-			    <label for="inputName" class="col-sm-2-random col-form-label-random">&nbsp;&nbsp;Product Name&nbsp;&nbsp;</label>
-			    <div class="col-sm-10">
-			      <input type="text" class="form-control" name="name"  placeholder="Enter Product name">
-			    </div>
-			  </div>
-
-			  <div class="form-group">
-			    <label for="inputCategory" class="col-sm-2-random col-form-label-random" style="margin-top:10px;margin-bottom:10px;">MRP</label>
-			    <div class="col-sm-10">
-			      <input type="text" class="form-control" name="mrp" id="inputCategory" placeholder="Enter MRP">
-			    </div>
-			  </div>
-<!-- 	        <input type="hidden" name="id" >-->
-			</form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" id="add-product">Add</button>
-      </div>
+    <!-- Top row with form-->
+    <div class="row">
+        <div class="col-12">
+            <button class="btn btn-primary" id="add-product-dialog" style="margin-right:28px;" type="button"><b>Add
+                Product</b>
+            </button>
+            <button class="btn btn-primary" id="upload-data" type="button"><b>Upload</b></button>
+        </div>
     </div>
-  </div>
-</div>
 
 
-<!-- Product Edit Modal -->
-<div class="modal" tabindex="-1" role="dialog" id="edit-product-modal" data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Edit Product Details</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-			<form class="form-inline" id="product-edit-form">
-			  <div class="form-group">
-			    <label for="inputName" class="col-sm-2-random col-form-label-random">&nbsp;&nbsp;Bar Code&nbsp;&nbsp;</label>
-			    <div class="col-sm-10">
-			      <input type="text" class="form-control" name="barCode" placeholder="Enter Barcode">
-			    </div>
-			  </div>
-
-				<div class="form-group">
-			    <label for="inputName" class="col-sm-2-random col-form-label-random">&nbsp;&nbsp;Brand name&nbsp;&nbsp;</label>
-			    <div class="col-sm-10">
-			      <input type="text" class="form-control" name="brandName" placeholder="Enter Brand Name">
-			    </div>
-			  </div>
-
-				<div class="form-group">
-			    <label for="inputName" class="col-sm-2-random col-form-label-random">&nbsp;&nbsp;Category&nbsp;&nbsp;</label>
-			    <div class="col-sm-10">
-			      <input type="text" class="form-control" name="category" placeholder="Enter Brand category">
-			    </div>
-			  </div>
-
-				<div class="form-group">
-			    <label for="inputName" class="col-sm-2-random col-form-label-random">&nbsp;&nbsp;Product name&nbsp;&nbsp;</label>
-			    <div class="col-sm-10">
-			      <input type="text" class="form-control" name="name" placeholder="Enter Product Name">
-			    </div>
-			  </div>
-
-			  <div class="form-group">
-			    <label for="inputCategory" class="col-sm-2-random col-form-label-random" style="margin-top:10px;margin-bottom:10px;">MRP</label>
-			    <div class="col-sm-10">
-			      <input type="text" class="form-control" name="mrp" placeholder="Enter MRP">
-			    </div>
-			  </div>
- 	        <input type="hidden" name="id" >
-			</form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" id="update-product">Update</button>
-      </div>
+    <!-- Blank Row -->
+    <div class="row">
+        &nbsp;
     </div>
-  </div>
-</div>
+    <div class="row">
+
+        <!-- Table -->
+        <div class="col-12">
+            <table class="table table-striped" id="product-table">
+                <thead>
+                <tr>
+                    <th scope="col">Bar Code</th>
+                    <th scope="col">Brand Name</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">MRP</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+
+    <!-- Product Add Modal -->
+    <div class="modal" data-backdrop="static" data-keyboard="false" id="add-product-modal" role="dialog" tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><b>Add Product Details</b></h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="add-product-form">
+                        <div class="form-group">
+                            <label class="col-sm-2-random col-form-label-random"
+                                   for="inputName">&nbsp;&nbsp;<b>Barcode</b>&nbsp;&nbsp;</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" id="inputName" name="barCode" placeholder="Enter Barcode"
+                                       type="text">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2-random col-form-label-random" for="inputName">&nbsp;&nbsp;<b>Brand
+                                Name</b>&nbsp;&nbsp;</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="form-brand-select" name="brandName"
+                                        placeholder="Select Brand Name"></select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2-random col-form-label-random"
+                                   for="inputName">&nbsp;&nbsp;<b>Category</b>&nbsp;&nbsp;</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="form-category-select" name="category"
+                                        placeholder="Select Category"></select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2-random col-form-label-random" for="inputName">&nbsp;&nbsp;<b>Product
+                                Name</b>&nbsp;&nbsp;</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" name="name" placeholder="Enter Product name" type="text">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2-random col-form-label-random"
+                                   for="inputCategory">&nbsp;<b>MRP</b></label>
+                            <div class="col-sm-10">
+                                <input class="form-control" id="inputCategory" name="mrp" placeholder="Enter MRP"
+                                       type="text">
+                            </div>
+                        </div>
+                        <!-- 	        <input type="hidden" name="id" >-->
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal" type="button"><b>Cancel</b></button>
+                    <button class="btn btn-primary" id="add-product" type="button"><b>Add</b></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Product Edit Modal -->
+    <div class="modal" data-backdrop="static" data-keyboard="false" id="edit-product-modal" role="dialog" tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><b>Edit Product Details</b></h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="product-edit-form">
+                        <div class="form-group">
+                            <label class="col-sm-2-random col-form-label-random" for="inputName">&nbsp;&nbsp;<b>Bar
+                                Code</b>&nbsp;&nbsp;</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" name="barCode" placeholder="Enter Barcode" type="text">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2-random col-form-label-random" for="inputName">&nbsp;&nbsp;<b>Brand
+                                name</b>&nbsp;&nbsp;</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="edit-brand-select"
+                                        name="brandName" placeholder="Select Brand Name">
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2-random col-form-label-random"
+                                   for="inputName">&nbsp;&nbsp;<b>Category</b>&nbsp;&nbsp;</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="edit-category-select"
+                                        name="category" placeholder="Select Brand category"></select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2-random col-form-label-random" for="name">&nbsp;&nbsp;<b>Product
+                                name</b>&nbsp;&nbsp;</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" id="name" name="name" placeholder="Enter Product Name"
+                                       type="text">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2-random col-form-label-random" for="inputCategory"><b>MRP</b></label>
+                            <div class="col-sm-10">
+                                <input class="form-control" name="mrp" placeholder="Enter MRP" type="text">
+                            </div>
+                        </div>
+                        <input name="id" type="hidden">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal" type="button"><b>Cancel</b></button>
+                    <button class="btn btn-primary" id="update-product" type="button"><b>Update</b></button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div> <!-- Container end-->
 
 
-<!-- Product Edit Modal -->
-<div class="modal" tabindex="-1" role="dialog" id="upload-product-modal">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
+<!-- Product Upload Modal -->
+<div class="modal" data-backdrop="static" data-keyboard="false" id="upload-product-modal" role="dialog" tabindex="-1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
 
-      <div class="modal-header">
-        <h5 class="modal-title">Upload Product</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
+            <div class="modal-header">
+                <h5 class="modal-title">Upload Product</h5>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
 
-      <div class="modal-body">
-      	<div class="product-file">
-		  <input type="file" class="custom-file-input" id="productFile">
-		  <label class="custom-file-label" for="productFile" id="productFileName">Choose file</label>
-		</div>
-		<a th:href="@{/sample/product.tsv}" target="_blank">Download Sample</a>
-		<br>
-		Rows: <span id="rowCount">0</span>,
-		Processed: <span id="processCount">0</span>,
-		Errors: <span id="errorCount">0</span>
-      </div>
+            <div class="modal-body">
+                <div class="product-file">
+                    <input class="custom-file-input" id="productFile" type="file">
+                    <label class="custom-file-label" for="productFile" id="productFileName"><b>Choose file</b></label>
+                </div>
+                <!-- <a th:href="@{/sample/product.tsv}" target="_blank">Download Sample</a> -->
+                <br>
+                <!-- Rows: <span id="rowCount">0</span>,
+    Processed: <span id="processCount">0</span>,
+    Errors: <span id="errorCount">0</span> -->
+            </div>
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" id="process-data">Upload</button>
-        <button type="button" class="btn btn-warning" id="download-errors">Download Errors</button>
-      </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-dismiss="modal" type="button"><b>Cancel</b></button>
+                <button class="btn btn-primary" id="process-data" type="button"><b>Upload</b></button>
+                <!-- <button type="button" class="btn btn-warning" id="download-errors">Download Errors</button> -->
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <footer th:replace="snippets.html :: name_footer"></footer>
-<script th:src="@{/static/products.js}" /></script>
+<script th:src="@{/static/products.js}">
+</script>
 <!--<script th:src="@{/static/papaparse.min.js}"/></script>-->
 
 </body>

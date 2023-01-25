@@ -15,9 +15,7 @@ function addBrand(event) {
 	//Set the values to update
 	//	$('#add-brand-modal').modal('toggle');
 	var $form = $("#add-brand-form");
-	var json = toJson($form);
-	json="["+json;
-	json+="]";
+	var json = "["+toJson($form)+"]";
 	var url = getBrandUrl();
 	console.log("This is the json",json);
 
@@ -36,8 +34,15 @@ function addBrand(event) {
 			alert("An error has occurred");
 		}
 	});
-
+	resetAddDialog();
+    $('#add-brand-modal').modal('toggle');
 	return false;
+}
+
+function resetAddDialog(){
+    $("#add-brand-form input[name=category]").val('');
+    $("#add-brand-form input[name=id]").val('');
+    $("#add-brand-form input[name=name]").val('');
 }
 
 function updateBrand(event) {
@@ -80,8 +85,8 @@ function getBrandList() {
 			console.log(data);
 			displayBrandList(data);     //...
 		},
-		error: function () {
-			alert("An error has occurred");
+		error: function (error) {
+			alert(error.responseJSON.message);
 		}
 	});
 }
@@ -94,7 +99,6 @@ function displayBrandList(data) {
 	$tbody.empty();
 	for (var i in data) {
 		var e = data[i];
-		//		var buttonHtml = '<button onclick="deleteBrand(' + e.id + ')">delete</button>'
 		var buttonHtml = ' <button onclick="displayEditBrand(' + e.id + ')" class="btn btn-primary" >Edit</button>'
 		var row = '<tr>'
 			//		+ '<td>' + e.id + '</td>'
@@ -160,39 +164,36 @@ function readFileDataCallback(results) {
 	uploadRows();
 }
 
-function uploadRows() {
-	//Update progress
-	updateUploadDialog();
-	//If everything processed then return
-	if (processCount == fileData.length) {
-		return;
-	}
-
-	//Process next row
-	var row = fileData[processCount];
-	processCount++;
-
-	var json = JSON.stringify(row);
+function uploadRows(){
+	var json = JSON.stringify(fileData);
 	var url = getBrandUrl();
-
+    console.log(json);
 	//Make ajax call
 	$.ajax({
-		url: url,
-		type: 'POST',
-		data: json,
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		success: function (response) {
-			uploadRows();
-		},
-		error: function (response) {
-			row.error = response.responseText
-			errorData.push(row);
-			uploadRows();
-		}
-	});
+	   url: url,
+	   type: 'POST',
+	   data: json,
+	   headers: {
+       	'Content-Type': 'application/json'
+       },
+	   success: function(response) {
+	        $('#upload-brand-modal').modal('toggle');
+	   		makeToast(true, "", null);
+            getBrandList();
 
+	   },
+	   error: function(error){
+	        $('#upload-brand-modal').modal('toggle');
+	        console.log(error);
+	        var message =  error.responseJSON.message;
+	        errorData = message;
+	        var pos = message.indexOf(",");
+            message = message.slice(0, pos);
+            message += "...."
+            console.log(message);
+	   		makeToast(false, message, downloadErrors);
+	   }
+	});
 }
 
 function downloadErrors() {

@@ -30,7 +30,6 @@ public class BrandApiController {
         return brandDto.get(id);
     }
 
-    //TODO try using post
     @ApiOperation(value = "Get a brand by brand and category")
     @RequestMapping(path = "/get-by-brand-and-category", method = RequestMethod.POST)
     public BrandData getByBrandAndCategory(@RequestBody BrandUpsertForm brandForm) {

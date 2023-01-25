@@ -4,12 +4,17 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
-public class BrandUpsertForm {
+public class InventoryUpsertForm {
+
+    @NotNull
     @NotBlank
-    private String name;
+    private String barcode;
+
+    @NotNull
     @NotBlank
-    private String category;
+    private Integer quantity;
 }

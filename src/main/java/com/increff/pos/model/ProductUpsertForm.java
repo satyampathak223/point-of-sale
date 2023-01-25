@@ -1,24 +1,25 @@
 package com.increff.pos.model;
 
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 
 @Getter
 @Setter
 public class ProductUpsertForm {
-    @NonNull
+    @NotBlank
     String barCode;
-    @NonNull
+    @NotBlank
     String brandName;
-    @NonNull
+    @NotBlank
     String category;
-    @NonNull
+    @NotBlank
     String name;
-    @NonNull
+    @NotNull
+    @PositiveOrZero
     Double mrp;
-
-    @NonNull
-    Integer id;
 
 }

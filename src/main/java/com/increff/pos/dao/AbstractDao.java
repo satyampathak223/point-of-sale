@@ -46,7 +46,6 @@ public abstract class AbstractDao<T> {
 
     public List<T> selectAll() {
         final String SELECT_ALL = "select p from " + className.getSimpleName() + " p";
-//        System.out.println(select_all);
         TypedQuery<T> query = getQuery(SELECT_ALL, className);
         return query.getResultList();
     }
