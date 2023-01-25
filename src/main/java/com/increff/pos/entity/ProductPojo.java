@@ -17,7 +17,7 @@ import static com.increff.pos.entity.GeneratorTable.*;
         name = "pos_products",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"barcode"})}
 )
-@Check(constraints = "mrp>=0")
+@Check(constraints = "mrp >= 0")
 public class ProductPojo {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = POS_PRODUCT_TABLE)

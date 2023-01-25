@@ -14,4 +14,6 @@ public class GeneratorTable {
 
     public static final String POS_PRODUCT_TABLE = "pos_product_table_generator";
 
+    public static final String POS_INVENTORY_TABLE = "pos_inventory_table_generator";
+
 }

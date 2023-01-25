@@ -5,16 +5,16 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @Getter
 @Setter
 public class InventoryUpsertForm {
 
-    @NotNull
     @NotBlank
     private String barcode;
 
     @NotNull
-    @NotBlank
+    @Positive
     private Integer quantity;
 }

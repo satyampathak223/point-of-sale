@@ -54,7 +54,7 @@ public class ProductApi {
     public ProductPojo getCheck(Integer id) throws ApiException {
         ProductPojo productPojo = productDao.select(id);
         if (productPojo == null) {
-            throw new ApiException("Brand with given ID does not exit, id: " + id);
+            throw new ApiException("Product with given ID does not exist, id: " + id);
         }
         return productPojo;
     }
