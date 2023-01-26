@@ -1,0 +1,141 @@
+<!doctype html>
+
+<html lang="en">
+
+<head th:replace="snippets.html :: name_head"></head>
+
+<body>
+
+	<nav th:replace="snippets.html :: name_navbar"></nav>
+	<div th:replace="snippets.html :: name_toast"></div>
+
+	<div class="container">
+
+
+		<!-- Top row with form-->
+		<div class="row">
+			<div class="col-12">
+				<button type="button" class="btn btn-primary" id="upload-data"><b>Upload</b></button>
+			</div>
+		</div>
+
+
+		<!-- Blank Row -->
+		<div class="row">
+			&nbsp;
+		</div>
+		<div class="row">
+
+			<!-- Table -->
+			<div class="col-12">
+				<table class="table table-striped" id="inventory-table">
+					<thead>
+						<tr>
+							<!--	      <th scope="col">ID</th>-->
+							<th scope="col">Barcode</th>
+							<th scope="col">Quantity</th>
+							<th scope="col">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td>Romil Jain</td>
+							<td>30</td>
+							<td>Edit | Delete</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>Rajul Jain</td>
+							<td>31</td>
+							<td>Edit | Delete</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>Anaisha Jain</td>
+							<td>7</td>
+							<td>Edit | Delete</td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+
+
+		<!-- Inventory Edit Modal -->
+		<div class="modal" tabindex="-1" role="dialog" id="edit-inventory-modal" data-backdrop="static" data-keyboard="false">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Edit Inventory Details</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form class="form-inline" id="inventory-edit-form">
+							<div class="form-group">
+								<label for="inputBarCode" class="col-sm-2 col-form-label">&nbsp;&nbsp;<b>Barcode</b>&nbsp;&nbsp;</label>
+								<div class="col-sm-10">
+									<input type="text" id="inputBarCode"class="form-control" name="barcode" placeholder="Enter barcode" readonly>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="inputBarCodes" class="col-sm-2 col-form-label"
+									style="margin-top:10px;margin-bottom:10px;"><b>Quantity&nbsp;&nbsp;</b></label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" name="quantity" placeholder="Enter Quantity" id="inputBarCodes">
+								</div>
+							</div>
+							<input type="hidden" name="productId">
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal"><b>Cancel</b></button>
+						<button type="button" class="btn btn-primary" id="update-inventory"><b>Update</b></button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div> <!-- Container end-->
+
+
+	<!-- Inventory Upload Modal -->
+	<div class="modal" tabindex="-1" role="dialog" id="upload-inventory-modal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<h5 class="modal-title"><b>Upload Inventory</b></h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<div class="modal-body">
+					<div class="inventory-file">
+						<input type="file" class="custom-file-input" id="inventoryFile">
+						<label class="custom-file-label" for="inventoryFile" id="inventoryFileName"><b>Choose file</b></label>
+					</div>
+					<br>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal"><b>Cancel</b></button>
+					<button type="button" class="btn btn-primary" id="process-data"><b>Upload</b></button>
+<!--					<button type="button" class="btn btn-warning" id="download-errors">Download Errors</button>-->
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer th:replace="snippets.html :: name_footer"></footer>
+	<script th:src="@{/static/inventories.js}" />
+	</script>
+
+</body>
+
+</html>

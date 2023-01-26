@@ -10,7 +10,6 @@ import org.springframework.util.CollectionUtils;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,16 +30,10 @@ public class InventoryApi {
 
     public void checkIfAlreadyExists(List<InventoryUpsertForm> inventoryForms) throws ApiException {
         List<String> existingBarCodes = new ArrayList<>();
-        List<ProductPojo> productPojos = productApi.getAll();
-        HashSet<String> productBarcodeHashSet = new HashSet<>();
-
-        for (ProductPojo productPojo : productPojos) {
-            productBarcodeHashSet.add(productPojo.getBarcode());
-        }
-
         for (InventoryUpsertForm inventoryForm : inventoryForms) {
-            if (productBarcodeHashSet.contains(inventoryForm.getBarcode())) {
-                existingBarCodes.add(inventoryForm.getBarcode());
+            String barcode = inventoryForm.getBarcode();
+            if (Objects.nonNull(getByBarCode(barcode))) {
+                existingBarCodes.add(barcode);
             }
         }
         if (!CollectionUtils.isEmpty(existingBarCodes)) {
@@ -48,8 +41,14 @@ public class InventoryApi {
         }
     }
 
-    public InventoryPojo get(Integer id) throws ApiException {
-        return getCheck(id);
+    public InventoryPojo get(Integer id) {
+        return inventoryDao.select(id);
+    }
+
+    public InventoryPojo getByBarCode(String barcode) throws ApiException {
+        ProductPojo productPojo = productApi.getByBarCode(barcode);
+        InventoryPojo inventoryPojo = get(productPojo.getId());
+        return inventoryPojo;
     }
 
     public List<InventoryPojo> getAll() throws ApiException {

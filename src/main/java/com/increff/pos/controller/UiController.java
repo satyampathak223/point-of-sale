@@ -25,6 +25,13 @@ public class UiController {
         return mav("products.html");
     }
 
+    @ApiOperation(value = "Serving a basic html page")
+    @RequestMapping(path = "/inventories")
+    public ModelAndView inventories() {
+        return mav("inventories.html");
+    }
+
+
     private ModelAndView mav(String page) {
         ModelAndView mav = new ModelAndView(page);
         mav.addObject("info", new InfoData());

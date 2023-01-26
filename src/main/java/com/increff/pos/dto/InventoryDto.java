@@ -41,6 +41,7 @@ public class InventoryDto extends AbstractDto {
         return convert(inventoryApi.get(id));
     }
 
+
     public List<InventoryData> getAll() throws ApiException {
         List<InventoryPojo> inventoryPojos = inventoryApi.getAll();
         List<InventoryData> inventoryDataList = new ArrayList<>();
@@ -64,7 +65,7 @@ public class InventoryDto extends AbstractDto {
         }
 
         if (!CollectionUtils.isEmpty(duplicates)) {
-            throw new ApiException("Duplicate barcode exists. Erroneous entries \n" + duplicates.toString());
+            throw new ApiException("Duplicate barcode exists in uploaded file. Erroneous entries \n" + duplicates.toString());
         }
     }
 
@@ -108,7 +109,8 @@ public class InventoryDto extends AbstractDto {
     public void update(InventoryUpsertForm inventoryForm) throws ApiException {
         checkNull(inventoryForm);
         normalize(inventoryForm);
-        inventoryApi.update(productApi.getByBarCode(inventoryForm.getBarcode()).getId(), convert(inventoryForm));
+        Integer id = productApi.getByBarCode(inventoryForm.getBarcode()).getId();
+        inventoryApi.update(id, convert(inventoryForm));
     }
 
     private InventoryPojo convert(InventoryUpsertForm inventoryForm) throws ApiException {
