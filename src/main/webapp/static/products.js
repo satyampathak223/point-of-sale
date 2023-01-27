@@ -123,6 +123,7 @@ function displayProductList(data) {
 			+ '</tr>';
 		$tbody.append(row);
 	}
+paginate();
 }
 
 function displayEditProduct(id) {
@@ -384,7 +385,10 @@ function resetProductForm() {
 	$("#product-form input[name=barcode]").val("");
 }
 
-
+function paginate(){
+      $('#product-table').DataTable();
+      $('.dataTables_length').addClass('bs-select');
+}
 
 $(document).ready(init);
 $(document).ready(getProductList);
