@@ -5,7 +5,7 @@ function getOrderUrl() {
 }
 function getInvoiceUrl() {
     var baseUrl = $("meta[name=baseUrl]").attr("content")
-    return baseUrl + "/api/order-invoice";
+    return baseUrl + "/api/get-invoice";
 }
 
 function openCreateOrderDialog(event) {
@@ -214,7 +214,7 @@ function displayOrderDetails(data) {
 
 function generateInvoice() {
     emptyDropdown(dropDownOrder);
-
+    console.log(orderId);
     url = getInvoiceUrl() + "/" + orderId;
 
     $.ajax({
@@ -224,12 +224,13 @@ function generateInvoice() {
             'Content-Type': 'application/json'
         },
         success: function (data) {
-
+            makeToast(true,"Invoice generation successful")
         },
         error: function (error) {
 
         }
     });
+    makeOrderDropdown();
 }
 
 //INITIALIZATION CODE
@@ -238,8 +239,13 @@ function init() {
     $('#form-create-order').click(createOrder);
     $('#add-item').click(addItem);
     $('#generate-invoice').click(generateInvoice);
-    $("#download-errors").click(onClick);
+    $("#download-errors").click(downloadErrors);
 
 }
+
+//function paginate(){
+//      $('#order-table').DataTable();
+//      $('.dataTables_length').addClass('bs-select');
+//}
 $(document).ready(init);
 $(document).ready(makeOrderDropdown);

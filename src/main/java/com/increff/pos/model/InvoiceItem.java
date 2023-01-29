@@ -7,15 +7,15 @@ import lombok.Setter;
 @Setter
 public class InvoiceItem {
 
-    private Integer Sno;
-    private String Barcode;
-    private String ProductName;
-    private Integer Quantity;
-    private Double UnitPrice;
-    private Double Total;
+    private Integer sno;
+    private String barcode;
+    private String productName;
+    private Integer quantity;
+    private Double unitPrice;
+    private Double total;
 
     public Double getTotal() {
-        return Quantity * UnitPrice;
+        return quantity * unitPrice;
     }
 
 }

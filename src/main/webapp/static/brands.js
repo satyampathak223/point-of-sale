@@ -114,6 +114,7 @@ function displayBrandList(data) {
 			+ '</tr>';
 		$tbody.append(row);
 	}
+	paginate();
 }
 
 function displayEditBrand(id) {
@@ -248,8 +249,13 @@ function init() {
 	$('#download-errors').click(downloadErrors);
 	$('#brandFile').on('change', updateFileName)
 	$('#add-brand-dialog').click(displayAddBrand)
-    $('#download-errors').click(onClick);
+    $('#download-errors').click(downloadErrors);
 
+}
+
+function paginate(){
+      $('#brand-table').DataTable();
+      $('.dataTables_length').addClass('bs-select');
 }
 
 $(document).ready(init);

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -31,6 +32,9 @@ public class OrderDto extends AbstractDto<OrderForm> {
 
     @Autowired
     private OrderItemDto orderItemDto;
+
+//    @Autowired
+//    private InvoiceData invoiceData;
 
     public void checkNull(OrderForm orderForm) throws ApiException {
 //        Check if order form is null or not
@@ -127,19 +131,44 @@ public class OrderDto extends AbstractDto<OrderForm> {
         return orderItemDataList;
     }
 
-    public void getInvoice(Integer orderId) throws ApiException {
+    public void getInvoice(Integer orderId) throws ApiException, IOException {
+        OrderPojo orderPojo = orderApi.get(orderId);
+
+        List<OrderItemData> orderItemDatas = get(orderId);
+        InvoiceData invoiceData = getInvoiceDataByOrderPojo(orderPojo);
+        invoiceData.setLineItems(convert(orderItemDatas));
+        orderApi.getPDFBase64(orderId, invoiceData);
     }
 
+    //        orderpojo to invoice data
     public InvoiceData getInvoiceDataByOrderPojo(OrderPojo orderPojo) throws ApiException {
-
+        InvoiceData invoiceData = new InvoiceData();
+        invoiceData.setInvoiceNumber(orderPojo.getId());
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.ENGLISH);
+        invoiceData.setInvoiceDate(orderPojo.getCreatedAt().format(dateFormatter));
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss z");
+        invoiceData.setInvoiceTime(orderPojo.getCreatedAt().format(timeFormatter));
+        return invoiceData;
     }
 
-    public List<InvoiceItem> convert(List<OrderItemForm> orderItemFormList) {
+    //    list orderitemform to list of invoiceitem
+    public List<InvoiceItem> convert(List<OrderItemData> orderItemDataList) {
+        List<InvoiceItem> invoiceItems = new ArrayList<>();
+        for (OrderItemData orderItemData : orderItemDataList) {
+            InvoiceItem invoiceItem = new InvoiceItem();
+
+            invoiceItem.setBarcode(orderItemData.getBarcode());
+            invoiceItem.setProductName(orderItemData.getProductName());
+            invoiceItem.setQuantity(orderItemData.getQuantity());
+            invoiceItem.setUnitPrice(orderItemData.getMrp());
+            invoiceItem.setTotal(orderItemData.getQuantity() * orderItemData.getMrp());
+
+            invoiceItems.add(invoiceItem);
+        }
+
+        return invoiceItems;
 
     }
-
-//        orderpojo to invoice data
-//    list orderitemform to list of invoiceitem
 
 
     private OrderPojo convert(OrderForm orderForm) throws ApiException {
@@ -151,7 +180,7 @@ public class OrderDto extends AbstractDto<OrderForm> {
     private OrderData convert(OrderPojo orderPojo) {
         OrderData orderData = new OrderData();
         orderData.setId(orderPojo.getId());
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-YYYY, HH:mm:ss z", Locale.ENGLISH);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy, HH:mm:ss z", Locale.ENGLISH);
         orderData.setCreatedAt(orderPojo.getCreatedAt().format(dateTimeFormatter));
         return orderData;
     }

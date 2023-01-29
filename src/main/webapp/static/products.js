@@ -269,7 +269,7 @@ function init() {
 	$('#download-errors').click(downloadErrors);
 	$('#productFile').on('change', updateFileName)
 	$('#add-product-dialog').click(displayAddProduct)
-    $("#download-errors").click(onClick);
+    $("#download-errors").click(downloadErrors);
 
 }
 

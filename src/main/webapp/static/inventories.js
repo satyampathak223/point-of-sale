@@ -67,6 +67,7 @@ function displayInventoryList(data) {
 			+ '</tr>';
 		$tbody.append(row);
 	}
+	paginate();
 }
 
 function displayEditInventory(id) {
@@ -199,7 +200,12 @@ function init() {
 	$('#process-data').click(processData);
 	$('#download-errors').click(downloadErrors);
 	$('#inventoryFile').on('change', updateFileName)
-    $("#download-errors").click(onClick);
+    $("#download-errors").click(downloadErrors);
+}
+
+function paginate(){
+      $('#inventory-table').DataTable();
+      $('.dataTables_length').addClass('bs-select');
 }
 
 $(document).ready(init);

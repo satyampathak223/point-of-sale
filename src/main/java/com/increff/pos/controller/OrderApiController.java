@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @Api
@@ -46,7 +47,7 @@ public class OrderApiController {
 
     @ApiOperation(value = "get Invoice of an order by Id")
     @RequestMapping(path = "/get-invoice/{orderId}", method = RequestMethod.GET)
-    public void update(@PathVariable Integer orderId) throws ApiException {
+    public void update(@PathVariable Integer orderId) throws ApiException, IOException {
         orderDto.getInvoice(orderId);
     }
 
