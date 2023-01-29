@@ -12,7 +12,7 @@ function toJson($form) {
     return json;
 }
 
-function makeToast(isSuccessful, message, onClick) {
+function makeToast(isSuccessful, message) {
     var toastHeading = document.getElementById('toast-heading');
     var toastMessage = document.getElementById('toast-message');
 //    var element=document.getElementById('toast');
@@ -37,7 +37,6 @@ function makeToast(isSuccessful, message, onClick) {
         toastHeading.innerHTML = "Error";
         toastHeading.style.color = 'red';
         $("#download-errors").show();
-        $("#download-errors").click(onClick);
 
     }
     toastMessage.innerHTML = message;

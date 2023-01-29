@@ -30,7 +30,12 @@ public class UiController {
     public ModelAndView inventories() {
         return mav("inventories.html");
     }
-
+    
+    @ApiOperation(value = "Serving a basic html page")
+    @RequestMapping(path = "/orders")
+    public ModelAndView orders() {
+        return mav("orders.html");
+    }
 
     private ModelAndView mav(String page) {
         ModelAndView mav = new ModelAndView(page);

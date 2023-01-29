@@ -15,7 +15,7 @@ import static com.increff.pos.entity.GeneratorTable.*;
         name = "pos_brands",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "category"})}
 )
-public class BrandPojo {
+public class BrandPojo extends BaseEntity {
     //    TODO check if names of generator table are correct
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = POS_BRAND_TABLE)

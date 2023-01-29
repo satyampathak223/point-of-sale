@@ -5,6 +5,7 @@ import com.increff.pos.entity.BrandPojo;
 import com.increff.pos.model.BrandUpsertForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -14,7 +15,6 @@ import java.util.Objects;
 @Service
 @Transactional(rollbackOn = ApiException.class)
 public class BrandApi {
-    //TODO always normalise on  api layer
     @Autowired
     private BrandDao brandDao;
 
@@ -33,7 +33,7 @@ public class BrandApi {
             }
         }
 
-        if (!errorMessage.isEmpty()) {
+        if (!CollectionUtils.isEmpty(errorMessage)) {
             throw new ApiException("Brand_category combination already exist. Erroneous combination\n" + errorMessage.toString());
         }
     }

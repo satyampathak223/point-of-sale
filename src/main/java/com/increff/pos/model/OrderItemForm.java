@@ -9,12 +9,12 @@ import javax.validation.constraints.Positive;
 
 @Getter
 @Setter
-public class InventoryUpsertForm {
-
-    @NotBlank(message = "Barcode can not be null or whitespace characters")
+public class OrderItemForm {
+    @NotNull(message = "Barcode can not be empty")
+    @NotBlank(message = "Barcode can not be empty")
     private String barcode;
 
-    @NotNull(message = "Product quantity can not be null")
-    @Positive(message = "Product quantity must be greater than 0")
+    @NotNull(message = "Quantity can not be null")
+    @Positive(message = "Quantity must be a positive integer")
     private Integer quantity;
 }

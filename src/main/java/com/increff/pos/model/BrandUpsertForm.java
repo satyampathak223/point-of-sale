@@ -8,8 +8,8 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Setter
 public class BrandUpsertForm {
-    @NotBlank
+    @NotBlank(message = "Brand name can not be null or whitespace characters")
     private String name;
-    @NotBlank
+    @NotBlank(message = "Brand category can not be null or whitespace characters")
     private String category;
 }

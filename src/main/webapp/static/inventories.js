@@ -4,47 +4,6 @@ function getInventoryUrl() {
 	return baseUrl + "/api/inventories";
 }
 
-//BUTTON ACTIONS
-
-//function displayAddInventory() {
-//	// 	resetUploadDialog();
-//	$('#add-inventory-modal').modal('toggle');
-//}
-
-//function addInventory(event) {
-//	//Set the values to update
-//	//	$('#add-inventory-modal').modal('toggle');
-//	var $form = $("#add-inventory-form");
-//	var json = "["+toJson($form)+"]";
-//	var url = getInventoryUrl();
-//	console.log("This is the json",json);
-//
-//	$.ajax({
-//		url: url,
-//		type: 'POST',
-//		data: json,
-//		headers: {
-//			'Content-Type': 'application/json'
-//		},
-//		success: function (response) {
-//			console.log("Inventory created");
-//			getInventoryList();     //...
-//		},
-//		error: function () {
-//			alert("An error has occurred");
-//		}
-//	});
-//	resetAddDialog();
-//    $('#add-inventory-modal').modal('toggle');
-//	return false;
-//}
-
-//function resetAddDialog(){
-//    $("#add-inventory-form input[name=category]").val('');
-//    $("#add-inventory-form input[name=id]").val('');
-//    $("#add-inventory-form input[name=name]").val('');
-//}
-
 function updateInventory(event) {
 	$('#edit-inventory-modal').modal('toggle');
 	//Get the ID
@@ -178,7 +137,7 @@ function uploadRows(){
        },
 	   success: function(response) {
 	        $('#upload-inventory-modal').modal('toggle');
-	   		makeToast(true, "", null);
+	   		makeToast(true, "");
             getInventoryList();
 
 	   },
@@ -191,7 +150,7 @@ function uploadRows(){
             message = message.slice(0, pos);
             message += "...."
             console.log(message);
-	   		makeToast(false, message, downloadErrors);
+	   		makeToast(false, message);
 	   }
 	});
 }
@@ -240,7 +199,7 @@ function init() {
 	$('#process-data').click(processData);
 	$('#download-errors').click(downloadErrors);
 	$('#inventoryFile').on('change', updateFileName)
-//	$('#add-inventory-dialog').click(displayAddInventory)
+    $("#download-errors").click(onClick);
 }
 
 $(document).ready(init);

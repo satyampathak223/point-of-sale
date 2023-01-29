@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "pos_inventory")
 @Check(constraints = "quantity > 0")
-public class InventoryPojo {
+public class InventoryPojo extends BaseEntity {
     @Id
     private Integer productId;
 

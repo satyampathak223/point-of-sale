@@ -47,6 +47,10 @@ public class InventoryApi {
 
     public InventoryPojo getByBarCode(String barcode) throws ApiException {
         ProductPojo productPojo = productApi.getByBarCode(barcode);
+        
+        if (Objects.isNull(productPojo)) {
+            throw new ApiException("Product with given barcode not present in inventory");
+        }
         InventoryPojo inventoryPojo = get(productPojo.getId());
         return inventoryPojo;
     }

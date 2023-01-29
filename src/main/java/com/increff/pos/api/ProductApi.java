@@ -5,6 +5,7 @@ import com.increff.pos.entity.ProductPojo;
 import com.increff.pos.model.ProductUpsertForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class ProductApi {
             }
         }
 
-        if (!errorMessage.isEmpty()) {
+        if (!CollectionUtils.isEmpty(errorMessage)) {
             throw new ApiException("Barcode already exist. Erroneous Entries \n" + errorMessage.toString());
         }
     }
@@ -82,7 +83,7 @@ public class ProductApi {
 
     public ProductPojo getByBarCode(String barCode) throws ApiException {
         List<ProductPojo> productPojos = productDao.select("barcode", barCode);
-        if (productPojos.isEmpty()) {
+        if (CollectionUtils.isEmpty(productPojos)) {
             return null;
         }
         return productPojos.get(0);

@@ -35,9 +35,13 @@ function addProduct(event) {
 		},
 		success: function (response) {
 			console.log("Product created");
+			makeToast(true, "");
 			getProductList();     //...
 		},
 		error: function (error) {
+		    var message=error.responseJSON.message;
+		    makeToast(false, message);
+
 			alert("An error has occurred while adding product");
 			console.log(error);
 		}
@@ -75,10 +79,13 @@ function updateProduct(event) {
 		},
 		success: function (response) {
 			console.log("Product update");
+			makeToast(true, "");
 			getProductList();     //...
 		},
-		error: function () {
-			alert("An error has occurred");
+		error: function (error) {
+			console.log("An error has occurred");
+			var message=error.responseJSON.message;
+		    makeToast(false, message);
 		}
 	});
 
@@ -184,41 +191,6 @@ function readFileDataCallback(results) {
 	uploadRows();
 }
 
-// function uploadRows(){
-// 	//Update progress
-// 	updateUploadDialog();
-// 	//If everything processed then return
-// 	if(processCount==fileData.length){
-// 		return;
-// 	}
-
-// 	//Process next row
-// 	var row = fileData[processCount];
-// 	processCount++;
-
-// 	var json = JSON.stringify(row);
-// 	var url = getProductUrl();
-
-// 	//Make ajax call
-// 	$.ajax({
-// 	   url: url,
-// 	   type: 'POST',
-// 	   data: json,
-// 	   headers: {
-//        	'Content-Type': 'application/json'
-//        },
-// 	   success: function(response) {
-// 	   		uploadRows();
-// 	   },
-// 	   error: function(response){
-// 	   		row.error=response.responseText
-// 	   		errorData.push(row);
-// 	   		uploadRows();
-// 	   }
-// 	});
-
-// }
-
 function uploadRows() {
 	var json = JSON.stringify(fileData);
 	var url = getProductUrl();
@@ -234,7 +206,7 @@ function uploadRows() {
 		},
 		success: function (response) {
 			$('#upload-product-modal').modal('toggle');
-			makeToast(true, "", null);
+			makeToast(true, "");
 			getProductList();
 
 		},
@@ -247,7 +219,7 @@ function uploadRows() {
 			message = message.slice(0, pos);
 			message += "....";
 			console.log(message);
-			makeToast(false, message, downloadErrors);
+			makeToast(false, message);
 		}
 	});
 }
@@ -297,6 +269,8 @@ function init() {
 	$('#download-errors').click(downloadErrors);
 	$('#productFile').on('change', updateFileName)
 	$('#add-product-dialog').click(displayAddProduct)
+    $("#download-errors").click(onClick);
+
 }
 
 function emptyDropdown(dropDown) {

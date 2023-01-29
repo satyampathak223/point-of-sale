@@ -10,6 +10,7 @@ import com.increff.pos.model.ProductUpsertForm;
 import com.increff.pos.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class ProductDto extends AbstractDto {
+public class ProductDto extends AbstractDto<ProductUpsertForm> {
 
     @Autowired
     private ProductApi productApi;
@@ -78,7 +79,7 @@ public class ProductDto extends AbstractDto {
             productUpsertFormSet.add(productForm);
         }
 
-        if (!duplicateBarCodes.isEmpty()) {
+        if (!CollectionUtils.isEmpty(duplicateBarCodes)) {
             throw new ApiException("Duplicate products exists. Erroneous entries \n" + duplicateBarCodes.toString());
         }
     }

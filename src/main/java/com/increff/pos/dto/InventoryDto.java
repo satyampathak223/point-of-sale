@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class InventoryDto extends AbstractDto {
+public class InventoryDto extends AbstractDto<InventoryUpsertForm> {
     @Autowired
     private InventoryApi inventoryApi;
 
@@ -80,7 +80,7 @@ public class InventoryDto extends AbstractDto {
         }
 
         if (!CollectionUtils.isEmpty(errorMessages)) {
-            throw new ApiException("Products does not exist in database. Erroneous entries \n" + errorMessages.toString());
+            throw new ApiException("Product(s) does not exist in database. Erroneous barcode(s) \n" + errorMessages.toString());
         }
     }
 

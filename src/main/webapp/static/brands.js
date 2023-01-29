@@ -28,10 +28,13 @@ function addBrand(event) {
 		},
 		success: function (response) {
 			console.log("Brand created");
+			makeToast(true, "");
 			getBrandList();     //...
 		},
-		error: function () {
-			alert("An error has occurred");
+		error: function (error) {
+			var message =  error.responseJSON.message;
+			makeToast(false, message);
+			console.log("An error has occurred",message);
 		}
 	});
 	resetAddDialog();
@@ -64,10 +67,13 @@ function updateBrand(event) {
 		},
 		success: function (response) {
 			console.log("Brand update");
+			makeToast(true, "");
 			getBrandList();     //...
 		},
-		error: function () {
-			alert("An error has occurred");
+		error: function (error) {
+			var message =  error.responseJSON.message;
+		    makeToast(false, message);
+			console.log("An error has occurred",message);
 		}
 	});
 
@@ -120,7 +126,8 @@ function displayEditBrand(id) {
 			console.log(data);
 			displayBrand(data);     //...
 		},
-		error: function () {
+		error: function (error) {
+            makeToast(false, "Unable to fetch data");
 			alert("An error has occurred");
 		}
 	});
@@ -178,7 +185,7 @@ function uploadRows(){
        },
 	   success: function(response) {
 	        $('#upload-brand-modal').modal('toggle');
-	   		makeToast(true, "", null);
+	   		makeToast(true, "");
             getBrandList();
 
 	   },
@@ -191,7 +198,7 @@ function uploadRows(){
             message = message.slice(0, pos);
             message += "...."
             console.log(message);
-	   		makeToast(false, message, downloadErrors);
+	   		makeToast(false, message);
 	   }
 	});
 }
@@ -241,6 +248,8 @@ function init() {
 	$('#download-errors').click(downloadErrors);
 	$('#brandFile').on('change', updateFileName)
 	$('#add-brand-dialog').click(displayAddBrand)
+    $('#download-errors').click(onClick);
+
 }
 
 $(document).ready(init);

@@ -14,7 +14,7 @@ import java.util.HashSet;
 import java.util.List;
 
 @Service
-public class BrandDto extends AbstractDto {
+public class BrandDto extends AbstractDto<BrandUpsertForm> {
 
     @Autowired
     private BrandApi brandApi;
@@ -82,6 +82,11 @@ public class BrandDto extends AbstractDto {
     }
 
     public void add(List<BrandUpsertForm> brandForms) throws ApiException {
+
+        for (BrandUpsertForm brandUpsertForm : brandForms) {
+            validate(brandUpsertForm);
+        }
+        
         for (BrandUpsertForm brandForm : brandForms) {
             checkNull(brandForm);
             normalize(brandForm);
@@ -94,7 +99,7 @@ public class BrandDto extends AbstractDto {
 
 //        Check if brand category combination already exists in database
         brandApi.checkIfAlreadyExists(brandForms);
-        
+
         List<BrandPojo> brandPojos = new ArrayList<>();
         for (BrandUpsertForm brandForm : brandForms) {
             brandPojos.add(convert(brandForm));
@@ -103,6 +108,7 @@ public class BrandDto extends AbstractDto {
     }
 
     public void update(Integer id, BrandUpsertForm brandForm) throws ApiException {
+        validate(brandForm);
         checkNull(brandForm);
         normalize(brandForm);
         brandApi.update(id, convert(brandForm));
